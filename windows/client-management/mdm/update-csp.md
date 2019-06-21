@@ -20,12 +20,12 @@ The following diagram shows the Update configuration service provider in tree fo
 
 ![update csp diagram](images/provisioning-csp-update.png)
 
-<a href="" id="update"></a>**Update**
+## Update
 The root node.
 
 Supported operation is Get.
 
-<a href="" id="approvedupdates"></a>**ApprovedUpdates**
+### ApprovedUpdates
 Node for update approvals and EULA acceptance on behalf of the end-user.
 
 > [!NOTE]
@@ -40,7 +40,7 @@ The update approval list enables IT to approve individual updates and update cla
 
 Supported operations are Get and Add.
 
-<a href="" id="approvedupdates-approved-update-guid"></a>**ApprovedUpdates/**<strong>*Approved Update Guid*</strong>
+#### <a id="approvedupdates-approved-update-guid"></a> Approved Update Guid
 Specifies the update GUID.
 
 To auto-approve a class of updates, you can specify the <a href="https://go.microsoft.com/fwlink/p/?LinkId=526723" data-raw-source="[Update Classifications](https://go.microsoft.com/fwlink/p/?LinkId=526723)">Update Classifications</a> GUIDs. We strongly recommend to always specify the DefinitionsUpdates classification (E0789628-CE08-4437-BE74-2495B842F43B), which are used for anti-malware signatures. There are released periodically (several times a day). Some businesses may also want to auto-approve security updates to get them deployed quickly.
@@ -53,62 +53,62 @@ Sample syncml:
 <LocURI>./Vendor/MSFT/Update/ApprovedUpdates/%7ba317dafe-baf4-453f-b232-a7075efae36e%7d</LocURI>
 ```
 
-<a href="" id="approvedupdates-approved-update-guid-approvedtime"></a>**ApprovedUpdates/*Approved Update Guid*/ApprovedTime**
+##### <a id="approvedupdates-approved-update-guid-approvedtime"></a> ApprovedTime
 Specifies the time the update gets approved.
 
 Supported operations are Get and Add.
 
-<a href="" id="failedupdates"></a>**FailedUpdates**
+### <a id="failedupdates"></a> FailedUpdates
 Specifies the approved updates that failed to install on a device.
 
 Supported operation is Get.
 
-<a href="" id="failedupdates-failed-update-guid"></a>**FailedUpdates/**<strong>*Failed Update Guid*</strong>
+#### <a id="failedupdates-failed-update-guid"></a> Failed Update Guid
 Update identifier field of the UpdateIdentity GUID that represent an update that failed to download or install.
 
 Supported operation is Get.
 
-<a href="" id="failedupdates-failed-update-guid-hresult"></a>**FailedUpdates/*Failed Update Guid*/HResult**
+##### <a id="failedupdates-failed-update-guid-hresult"></a> HResult
 The update failure error code.
 
 Supported operation is Get.
 
-<a href="" id="failedupdates-failed-update-guid-status"></a>**FailedUpdates/*Failed Update Guid*/Status**
+##### <a id="failedupdates-failed-update-guid-status"></a> Status
 Specifies the failed update status (for example, download, install).
 
 Supported operation is Get.
 
-<a href="" id="failedupdates-failed-update-guid-revisionnumber"></a>**FailedUpdates/*Failed Update Guid*/RevisionNumber**
+##### <a id="failedupdates-failed-update-guid-revisionnumber"></a> RevisionNumber
 Added in Windows 10, version 1703. The revision number for the update that must be passed in server to server sync to get the metadata for the update.
 
 Supported operation is Get.
 
-<a href="" id="installedupdates"></a>**InstalledUpdates**
+### <a id="installedupdates"></a> InstalledUpdates
 The updates that are installed on the device.
 
 Supported operation is Get.
 
-<a href="" id="installedupdates-installed-update-guid"></a>**InstalledUpdates/**<strong>*Installed Update Guid*</strong>
+#### <a id="installedupdates-installed-update-guid"></a> Installed Update Guid
 UpdateIDs that represent the updates installed on a device.
 
 Supported operation is Get.
 
-<a href="" id="installedupdates-installed-update-guid-revisionnumber"></a>**InstalledUpdates/*Installed Update Guid*/RevisionNumber**
+##### <a id="installedupdates-installed-update-guid-revisionnumber"></a> RevisionNumber
 Added in Windows 10, version 1703. The revision number for the update that must be passed in server to server sync to get the metadata for the update.
 
 Supported operation is Get.
 
-<a href="" id="installableupdates"></a>**InstallableUpdates**
+### <a id="installableupdates"></a> InstallableUpdates
 The updates that are applicable and not yet installed on the device. This includes updates that are not yet approved.
 
 Supported operation is Get.
 
-<a href="" id="installableupdates-installable-update-guid"></a>**InstallableUpdates/**<strong>*Installable Update Guid*</strong>
+#### <a id="installableupdates-installable-update-guid"></a> Installable Update Guid
 Update identifiers that represent the updates applicable and not installed on a device.
 
 Supported operation is Get.
 
-<a href="" id="installableupdates-installable-update-guid-type"></a>**InstallableUpdates/*Installable Update Guid*/Type**
+##### <a id="installableupdates-installable-update-guid-type"></a> Type
 The UpdateClassification value of the update. Valid values are:
 
 -   0 - None
@@ -117,45 +117,45 @@ The UpdateClassification value of the update. Valid values are:
 
 Supported operation is Get.
 
-<a href="" id="installableupdates-installable-update-guid-revisionnumber"></a>**InstallableUpdates/*Installable Update Guid*/RevisionNumber**
+##### <a id="installableupdates-installable-update-guid-revisionnumber"></a> RevisionNumber
 The revision number for the update that must be passed in server to server sync to get the metadata for the update.
 
 Supported operation is Get.
 
-<a href="" id="pendingrebootupdates"></a>**PendingRebootUpdates**
+### <a id="pendingrebootupdates"></a> PendingRebootUpdates
 The updates that require a reboot to complete the update session.
 
 Supported operation is Get.
 
-<a href="" id="pendingrebootupdates-pending-reboot-update-guid"></a>**PendingRebootUpdates/**<strong>*Pending Reboot Update Guid*</strong>
+#### <a id="pendingrebootupdates-pending-reboot-update-guid"></a> Pending Reboot Update Guid
 Update identifiers for the pending reboot state.
 
 Supported operation is Get.
 
-<a href="" id="pendingrebootupdates-pending-reboot-update-guid-installedtime"></a>**PendingRebootUpdates/*Pending Reboot Update Guid*/InstalledTime**
+##### <a id="pendingrebootupdates-pending-reboot-update-guid-installedtime"></a> InstalledTime
 The time the update is installed.
 
 Supported operation is Get.
 
-<a href="" id="pendingrebootupdates-pending-reboot-update-guid-revisionnumber"></a>**PendingRebootUpdates/*Pending Reboot Update Guid*/RevisionNumber**
+##### <a id="pendingrebootupdates-pending-reboot-update-guid-revisionnumber"></a> RevisionNumber
 Added in Windows 10, version 1703. The revision number for the update that must be passed in server to server sync to get the metadata for the update.
 
 Supported operation is Get.
 
-<a href="" id="lastsuccessfulscantime"></a>**LastSuccessfulScanTime**
+### <a id="lastsuccessfulscantime"></a> LastSuccessfulScanTime
 The last successful scan time.
 
 Supported operation is Get.
 
-<a href="" id="deferupgrade"></a>**DeferUpgrade**
+### <a id="deferupgrade"></a> DeferUpgrade
 Upgrades deferred until the next period.
 
 Supported operation is Get.
 
-<a href="" id="rollback"></a>**Rollback**
+### <a id="rollback"></a> Rollback
 Added in Windows 10, version 1803. Node for the rollback operations.
 
-<a href="" id="rollback-qualityupdate"></a>**Rollback/QualityUpdate**
+#### <a id="rollback-qualityupdate"></a> QualityUpdate
 Added in Windows 10, version 1803. Roll back latest Quality Update, if the machine meets the following conditions:
 
 -  Condition 1: Device must be Windows Update for Business Connected
@@ -164,7 +164,7 @@ Added in Windows 10, version 1803. Roll back latest Quality Update, if the machi
 
 If the conditions are not true, the device will not Roll Back the Latest Quality Update.
 
-<a href="" id="rollback-featureupdate"></a>**Rollback/FeatureUpdate**
+#### <a id="rollback-featureupdate"></a> FeatureUpdate
 Added in Windows 10, version 1803. Roll Back Latest Feature Update, if the machine meets the following conditions:
 
 -  Condition 1: Device must be Windows Update for Business Connnected
@@ -177,11 +177,10 @@ Added in Windows 10, version 1803. Roll Back Latest Feature Update, if the machi
 
 If the conditions are not true, the device will not Roll Back the Latest Feature Update.
 
-
-<a href="" id="rollback-qualityupdatestatus"></a>**Rollback/QualityUpdateStatus**
+#### <a id="rollback-qualityupdatestatus"></a> QualityUpdateStatus
 Added in Windows 10, version 1803. Returns the result of last RollBack QualityUpdate operation.
 
-<a href="" id="rollback-featureupdatestatus"></a>**Rollback/FeatureUpdateStatus**
+#### <a id="rollback-featureupdatestatus"></a> FeatureUpdateStatus
 Added in Windows 10, version 1803. Returns the result of last RollBack FeatureUpdate operation.
 
 ## Related topics
