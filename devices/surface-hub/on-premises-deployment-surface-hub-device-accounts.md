@@ -2,7 +2,7 @@
 title: On-premises deployment single forest (Surface Hub)
 description: This topic explains how you add a device account for your Microsoft Surface Hub when you have a single-forest, on-premises deployment.
 ms.assetid: 80E12195-A65B-42D1-8B84-ECC3FCBAAFC6
-ms.reviewer: 
+ms.reviewer:
 manager: dansimp
 keywords: single forest deployment, on prem deployment, device account, Surface Hub
 ms.prod: surface-hub
@@ -105,18 +105,14 @@ If you have a single-forest on-premises deployment with Microsoft Exchange 2013 
    ```
 
    Again, you need to replace the provided domain controller and phone number examples with your own information. The parameter value `$true` stays the same.
-    
 
- ## Disable anonymous email and IM
+## Disable anonymous email and IM
 
-
-
-
-Surface Hub uses a device account to provide email and collaboration services (IM, video, voice). This device account is used as the originating identity (the “from” party) when sending email, IM, and placing calls. As this account is not coming from an individual, identifiable user, it is deemed “anonymous” because it originated from the Surface Hub's device account.  
+Surface Hub uses a device account to provide email and collaboration services (IM, video, voice). This device account is used as the originating identity (the “from” party) when sending email, IM, and placing calls. As this account is not coming from an individual, identifiable user, it is deemed “anonymous” because it originated from the Surface Hub's device account.
 
 Assume you have a per-user client policy assigned to each meeting room device with an identity of **SurfaceHubPolicy**. To disable anonymous email and messaging, you add a clientPolicyEntry to this client policy by using the following commands.
 
-```
+```powershell
 $policyEntry = New-CsClientPolicyEntry -Name AllowResourceAccountSendMessage -value $false
 $clientPolicy = Get-CsClientPolicy -Identity SurfaceHubPolicy
 $clientPolicy.PolicyEntry.Add($policyEntry)
@@ -125,7 +121,7 @@ Set-CsClientPolicy -Instance $clientPolicy
 
 To verify that the policy has been set:
 
-```
+```powershell
 Select-Object -InputObject $clientPolicy -Property PolicyEntry
 ```
 
@@ -136,25 +132,18 @@ PolicyEntry
 -----------
 {Name=AllowResourceAccountSendMessage;Value=False}
 ```
-	
-	
+
+
 To change the policy entry:
 
-```
+```powershell
 $policyEntry =  New-CsClientPolicyEntry -Name AllowResourceAccountSendMessage -value $true
 $clientPolicy | Set-CsClientPolicy -PolicyEntry @{Replace = $policyEntry}
-``` 
-	
+```
+
 To remove the policy entry:
 
-```
+```powershell
 $policyEntry = New-CsClientPolicyEntry -Name AllowResourceAccountSendMessage -value $true
 $clientPolicy | Set-CsClientPolicy -PolicyEntry @{Remove = $policyEntry}
 ```
-
- 
-
-
-
-
-

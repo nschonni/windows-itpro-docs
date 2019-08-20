@@ -30,6 +30,6 @@ ms.localizationpriority: medium
 <p><b><a href="cloud-mode-business-setup.md" data-raw-source="[Get started: Deploy and manage a full cloud IT solution for your business](cloud-mode-business-setup.md)">Get started: Deploy and manage a full cloud IT solution for your business</a></b><br />Find out how easy it is to deploy and manage a full cloud IT solution for your small to midsize business using Microsoft cloud services and tools.</p>
 
 
- ## Related topics
+## Related topics
 
 - [Windows 10 and Windows 10 Mobile](https://technet.microsoft.com/itpro/windows/index)

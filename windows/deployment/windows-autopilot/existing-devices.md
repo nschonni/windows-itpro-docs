@@ -9,7 +9,8 @@ ms.mktglfcycl: deploy
 ms.localizationpriority: medium
 ms.sitesec: library
 ms.pagetype: deploy
-audience: itproauthor: greg-lindsay
+audience: itpro
+author: greg-lindsay
 ms.author: greglin
 ms.collection: M365-modern-desktop
 ms.topic: article
@@ -23,8 +24,8 @@ Modern desktop deployment with Windows Autopilot enables you to easily deploy th
 
 This topic describes how to convert Windows 7 or Windows 8.1 domain-joined computers to Windows 10 devices joined to either Azure Active Directory or Active Directory (Hybrid Azure AD Join) by using Windows Autopilot.
 
->[!NOTE]
->Windows Autopilot for existing devices only supports user-driven Azure Active Directory and Hybrid Azure AD profiles. Self-deploying profiles are not supported.
+> [!NOTE]
+> Windows Autopilot for existing devices only supports user-driven Azure Active Directory and Hybrid Azure AD profiles. Self-deploying profiles are not supported.
 
 ## Prerequisites
 
@@ -44,23 +45,21 @@ If desired, you can set up an [enrollment status page](https://docs.microsoft.co
 To enable and configure the enrollment and status page:
 
 1. Open [Intune in the Azure portal](https://aka.ms/intuneportal).
-2. Access **Intune > Device enrollment > Windows enrollment** and [Set up an enrollment status page](https://docs.microsoft.com/intune/windows-enrollment-status). 
-3. Access **Azure Active Directory > Mobility (MDM and MAM) > Microsoft Intune** and [Configure automatic MDM enrollment](https://docs.microsoft.com/sccm/mdm/deploy-use/enroll-hybrid-windows#enable-windows-10-automatic-enrollment) and configure the MDM user scope for some or all users. 
+2. Access **Intune > Device enrollment > Windows enrollment** and [Set up an enrollment status page](https://docs.microsoft.com/intune/windows-enrollment-status).
+3. Access **Azure Active Directory > Mobility (MDM and MAM) > Microsoft Intune** and [Configure automatic MDM enrollment](https://docs.microsoft.com/sccm/mdm/deploy-use/enroll-hybrid-windows#enable-windows-10-automatic-enrollment) and configure the MDM user scope for some or all users.
 
 See the following examples.
 
 ![enrollment status page](images/esp-config.png)<br><br>
 ![mdm](images/mdm-config.png)
 
-### Create the JSON file 
+### Create the JSON file
 
->[!TIP]
->To run the following commands on a computer running Windows Server 2012/2012 R2 or Windows 7/8.1, you must first download and install the [Windows Management Framework](https://www.microsoft.com/en-us/download/details.aspx?id=54616).
+> [!TIP]
+> To run the following commands on a computer running Windows Server 2012/2012 R2 or Windows 7/8.1, you must first download and install the [Windows Management Framework](https://www.microsoft.com/en-us/download/details.aspx?id=54616).
 
 1. On an Internet connected Windows PC or Server open an elevated Windows PowerShell command window
 2. Enter the following lines to install the necessary modules
-
-    #### Install required modules
 
     ```powershell
     Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
@@ -74,7 +73,7 @@ See the following examples.
      ```powershell
      Connect-AutopilotIntune -user admin@M365x373186.onmicrosoft.com
      ```
-     The password for your account will be requested using a standard Azure AD form. Type your password and then click **Sign in**. 
+     The password for your account will be requested using a standard Azure AD form. Type your password and then click **Sign in**.
      <br>See the following example:
 
      ![Azure AD authentication](images/pwd.png)
@@ -84,8 +83,6 @@ See the following examples.
    - Click **Accept**
 
 4. Next, retrieve and display all the Autopilot profiles available in the specified Intune tenant in JSON format:
-
-    #### Retrieve profiles in Autopilot for existing devices JSON format
 
     ```powershell
     Get-AutopilotProfile | ConvertTo-AutopilotConfigurationJSON
@@ -106,7 +103,7 @@ See the following examples.
         "ZtdCorrelationId":  "7F9E6025-1E13-45F3-BF82-A3E8C5B59EAC"
     }</pre>
 
-    Each profile is encapsulated within braces **{ }**. In the previous example, a single profile is displayed.     
+    Each profile is encapsulated within braces **{ }**. In the previous example, a single profile is displayed.
 
     See the following table for a description of properties used in the JSON file.
 
@@ -129,7 +126,9 @@ See the following examples.
     ```powershell
     Get-AutopilotProfile | ConvertTo-AutopilotConfigurationJSON | Out-File c:\Autopilot\AutopilotConfigurationFile.json -Encoding ASCII
     ```
-    **IMPORTANT**: The file name must be named **AutopilotConfigurationFile.json** in addition to being encoded as ASCII/ANSI. 
+
+    > [!IMPORTANT]
+    > The file name must be named **AutopilotConfigurationFile.json** in addition to being encoded as ASCII/ANSI.
 
     If preferred, you can save the profile to a text file and edit in Notepad. In Notepad, when you choose **Save as** you must select Save as type: **All Files** and choose ANSI from the drop-down list next to **Encoding**. See the following example.
 
@@ -137,8 +136,8 @@ See the following examples.
 
     After saving the file, move the file to a location suitable as an SCCM package source.
 
-    >[!IMPORTANT]
-    >Multiple JSON profile files can be used, but each must be named **AutopilotConfigurationFile.json** in order for OOBE to follow the Autopilot experience. The file also must be encoded as ANSI. <br><br>**Saving the file with Unicode or UTF-8 encoding or saving it with a different file name will cause Windows 10 OOBE to not follow the Autopilot experience**.<br>
+    > [!IMPORTANT]
+    > Multiple JSON profile files can be used, but each must be named **AutopilotConfigurationFile.json** in order for OOBE to follow the Autopilot experience. The file also must be encoded as ANSI. <br><br>**Saving the file with Unicode or UTF-8 encoding or saving it with a different file name will cause Windows 10 OOBE to not follow the Autopilot experience**.<br>
 
 
 ### Create a package containing the JSON file
@@ -148,7 +147,7 @@ See the following examples.
 3. In the **Create Package and Program Wizard** enter the following **Package** and **Program Type** details:<br>
     - <u>Name</u>: **Autopilot for existing devices config**
     - Select the **This package contains source files** checkbox
-    - <u>Source folder</u>: Click **Browse** and specify a UNC path containing the AutopilotConfigurationFile.json file. 
+    - <u>Source folder</u>: Click **Browse** and specify a UNC path containing the AutopilotConfigurationFile.json file.
     - Click **OK** and then click **Next**.
     - <u>Program Type</u>: **Do not create a program**
 4. Click **Next** twice and then click **Close**.
@@ -157,8 +156,8 @@ See the following examples.
 
 ### Create a target collection
 
->[!NOTE]
->You can also choose to reuse an existing collection
+> [!NOTE]
+> You can also choose to reuse an existing collection
 
 1. Navigate to **\Assets and Compliance\Overview\Device Collections**
 2. On the ribbon, click **Create** and then click **Create Device Collection**
@@ -167,8 +166,8 @@ See the following examples.
    - Comment: (optional)
    - <u>Limiting collection</u>: Click **Browse** and select **All Systems**
 
-     >[!NOTE]
-     >You can optionally choose to use an alternative collection for the limiting collection. The device to be upgraded must be running the ConfigMgr agent in the collection that you select.
+     > [!NOTE]
+     > You can optionally choose to use an alternative collection for the limiting collection. The device to be upgraded must be running the ConfigMgr agent in the collection that you select.
 
 4. Click **Next**, then enter the following **Membership Rules** details:
    - Click **Add Rule** and specify either a direct or query based collection rule to add the target test Windows 7 devices to the new collection.
@@ -184,8 +183,8 @@ See the following examples.
 
 ### Create an Autopilot for existing devices Task Sequence
 
->[!TIP]
->The next procedure requires a boot image for Windows 10 1803 or later. Review your available boot images in the Configuration Manager conole under **Software Library\Overview\Operating Systems\Boot images** and verify that the **OS Version** is 10.0.17134.1 (Windows 10 version 1803) or later.
+> [!TIP]
+> The next procedure requires a boot image for Windows 10 1803 or later. Review your available boot images in the Configuration Manager conole under **Software Library\Overview\Operating Systems\Boot images** and verify that the **OS Version** is 10.0.17134.1 (Windows 10 version 1803) or later.
 
 1. In the Configuration Manager console, navigate to **\Software Library\Overview\Operating Systems\Task Sequences**
 2. On the Home ribbon, click **Create Task Sequence**
@@ -201,8 +200,8 @@ See the following examples.
    - <u>Enable the account and specify the local administrator password</u>: Optional.
    - Click **Next**, and then on the Configure Network page choose **Join a workgroup** and specify a name (ex: workgroup) next to **Workgroup**.
 
-     >[!IMPORTANT]
-     >The Autopilot for existing devices task sequence will run the **Prepare Windows for capture** action which calls the System Preparation Tool (syeprep). This action will fail if the target machine is joined to a domain.
+     > [!IMPORTANT]
+     > The Autopilot for existing devices task sequence will run the **Prepare Windows for capture** action which calls the System Preparation Tool (syeprep). This action will fail if the target machine is joined to a domain.
 
 5. Click **Next** and then click **Next** again to accept the default settings on the Install Configuration Manager page.
 6. On the State Migration page, enter the following details:
@@ -211,8 +210,8 @@ See the following examples.
    - Clear the **Capture Microsoft Windows settings** checkbox.
    - Click **Next**.
 
-     >[!NOTE]
-     >The Autopilot for existing devices task sequence will result in an Azure Active Directory Domain (AAD) joined device. The User State Migration Toolkit (USMT) does not support AAD joined or hybrid AAD joined devices.
+     > [!NOTE]
+     > The Autopilot for existing devices task sequence will result in an Azure Active Directory Domain (AAD) joined device. The User State Migration Toolkit (USMT) does not support AAD joined or hybrid AAD joined devices.
 
 7. On the Include Updates page, choose one of the three available options. This selection is optional.
 8. On the Install applications page, add applications if desired. This is optional.
@@ -301,8 +300,8 @@ The Task Sequence will download content, reboot, format the drives and install W
 ![refresh-2](images/up-2.png)
 ![refresh-3](images/up-3.png)
 
->[!NOTE]
->If joining devices to Active Directory (Hybrid Azure AD Join), it is necessary to create a Domain Join device configuration profile that is targeted to "All Devices" (since there is no Azure Active Directory device object for the computer to do group-based targeting).  See [User-driven mode for hybrid Azure Active Directory join](https://docs.microsoft.com/windows/deployment/windows-autopilot/user-driven#user-driven-mode-for-hybrid-azure-active-directory-join) for more information.
+> [!NOTE]
+> If joining devices to Active Directory (Hybrid Azure AD Join), it is necessary to create a Domain Join device configuration profile that is targeted to "All Devices" (since there is no Azure Active Directory device object for the computer to do group-based targeting).  See [User-driven mode for hybrid Azure Active Directory join](https://docs.microsoft.com/windows/deployment/windows-autopilot/user-driven#user-driven-mode-for-hybrid-azure-active-directory-join) for more information.
 
 ### Register the device for Windows Autopilot
 
